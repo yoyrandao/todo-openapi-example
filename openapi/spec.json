@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Todo API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "security": [
+    {
+      "openId": []
+    }
+  ],
+  "paths": {
+    "/todo/list": {
+      "get": {
+        "summary": "Get all todos",
+        "description": "This operation get all todos.",
+        "operationId": "getTodos",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todo"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/todo": {
+      "post": {
+        "summary": "Add a new todo",
+        "description": "This operation adds a new todo.",
+        "operationId": "addTodo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Todo"
+              }
+            }
+          },
+          "description": "Todo task",
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Todo already exists"
+          }
+        }
+      }
+    },
+    "/todo/{name}": {
+      "delete": {
+        "summary": "Delete a todo",
+        "description": "This operation deletes a todo.",
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name for which you want to delete the data.",
+            "example": "test-todo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Todo not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a todo",
+        "description": "This operation updates a todo.",
+        "operationId": "updateTodo",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name for which you want to delete the data.",
+            "example": "test-todo",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Todo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Todo not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "openId": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "http://keycloak.api-playground.orb.local:8080/realms/myrealm/.well-known/openid-configuration"
+      }
+    },
+    "schemas": {
+      "Todo": {
+        "type": "object",
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

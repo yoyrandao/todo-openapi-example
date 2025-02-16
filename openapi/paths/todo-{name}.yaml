@@ -1,0 +1,42 @@
+delete:
+  summary: Delete a todo
+  description: "This operation deletes a todo."
+  operationId: deleteTodo
+  parameters:
+    - name: name
+      in: path
+      description: "The name for which you want to delete the data."
+      example: test-todo
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: No Content
+    '404':
+      description: Todo not found
+
+patch:
+  summary: Update a todo
+  description: "This operation updates a todo."
+  operationId: updateTodo
+  parameters: 
+    - name: name
+      in: path
+      description: "The name for which you want to delete the data."
+      example: test-todo
+      required: true
+      schema:
+        type: string
+  requestBody: 
+    content:
+      application/json:
+        schema:
+          $ref: '../components/schemas/Todo.yaml'
+  responses:
+    '200':
+      description: Successful operation
+    '400':
+      description: Invalid request
+    '404':
+      description: Todo not found

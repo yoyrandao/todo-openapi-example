@@ -1,0 +1,16 @@
+post:
+  summary: Add a new todo
+  description: "This operation adds a new todo."
+  operationId: addTodo
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Todo.yaml
+    description: Todo task
+    required: true
+  responses:
+    '201':
+      description: Created
+    '409':
+      description: Todo already exists

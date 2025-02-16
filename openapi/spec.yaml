@@ -1,0 +1,24 @@
+openapi: "3.0.3"
+servers: 
+  - url: "http://localhost:3000" 
+info:
+  version: 1.0.0
+  title: Todo API
+paths:
+  /todo/list:
+    $ref: paths/todo-list.yaml
+  /todo:
+    $ref: paths/todo.yaml
+  /todo/{name}:
+    $ref: paths/todo-{name}.yaml
+components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: http://keycloak.api-playground.orb.local:8080/realms/myrealm/.well-known/openid-configuration
+  schemas:
+    Todo:
+      $ref: components/schemas/Todo.yaml
+security: 
+  - openId:
+      - api_read
